@@ -1,0 +1,26 @@
+{
+  "name": "logseq-sample-plugin",
+  "version": "0.0.1",
+  "description": "A sample plugin for logseq",
+  "author": "Aleksei Gusev <aleksei.gusev@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel ./index.html",
+    "build": "parcel build --public-url . --no-source-maps index.html",
+    "e2e:prepare": "./scripts/e2e-prepare",
+    "e2e:logseq": "env HOME=`pwd`/tmp/user-home XDG_CONFIG_HOME=`pwd`/tmp/user-home/.config ./tmp/user-home/release/Logseq"
+  },
+  "devDependencies": {
+    "@logseq/libs": "^0.2.0",
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^22.9.0",
+    "electron": "28.3.1",
+    "parcel": "2.9.3",
+    "playwright": "^1.48.2"
+  },
+  "logseq": {
+    "main": "dist/index.html",
+    "icon": "./logo.png",
+    "id": "sample-plugin"
+  }
+}
