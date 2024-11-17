@@ -1,7 +1,7 @@
 import '@logseq/libs'
 
 async function main() {
-  logseq.UI.showMsg("hello, I'm a sample plugin! :)")
+  logseq.UI.showMsg('cycle-todo-dwim AAAA')
 }
 
 // bootstrap

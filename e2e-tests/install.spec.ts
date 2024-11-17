@@ -8,6 +8,6 @@ test('verifying the plugin is installed', async ({ page }) => {
   await page.keyboard.press('Escape')
   await page.keyboard.press('t+p')
   await expect(page.locator('.installed h3 span')).toHaveText(
-    'logseq-sample-plugin'
+    'logseq-cycle-todo-dwim'
   )
 })
