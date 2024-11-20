@@ -56,8 +56,8 @@ base.beforeAll(async () => {
   })
 
   electronApp = await electron.launch({
-    cwd: path.resolve(testTmpDir, 'user-home/release/resources/app'),
-    args: ['electron.js'],
+    executablePath: path.resolve(testTmpDir, 'user-home/release/Logseq'),
+    args: ['--no-sandbox'],
     env: {
       ...process.env,
       HOME: `${testTmpDir}/user-home`,
