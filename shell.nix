@@ -4,7 +4,8 @@ with pkgs; mkShell {
   name = "logseq-cycle-todo-dwim";
 
   buildInputs = [
-    nodejs_18
+nodejs_20
+
     yarn
     bashInteractive
   ];
