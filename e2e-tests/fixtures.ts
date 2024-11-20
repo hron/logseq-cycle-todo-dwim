@@ -56,7 +56,7 @@ base.beforeAll(async () => {
   })
 
   electronApp = await electron.launch({
-    executablePath: path.resolve(testTmpDir, 'user-home/release/Logseq'),
+    executablePath: path.resolve(testTmpDir, 'logseq.AppImage'),
     args: ['--no-sandbox'],
     env: {
       ...process.env,
