@@ -9,7 +9,7 @@
     "build": "parcel build --public-url . --no-source-maps index.html",
     "watch": "parcel watch --public-url . --no-source-maps index.html",
     "e2e:prepare": "./scripts/e2e-prepare",
-    "e2e:logseq": "env HOME=`pwd`/tmp/user-home XDG_CONFIG_HOME=`pwd`/tmp/user-home/.config ./tmp/user-home/release/Logseq"
+    "e2e:logseq": "env HOME=`pwd`/tmp/user-home XDG_CONFIG_HOME=`pwd`/tmp/user-home/.config ./tmp/logseq.AppImage"
   },
   "devDependencies": {
     "@logseq/libs": "^0.2.0",
