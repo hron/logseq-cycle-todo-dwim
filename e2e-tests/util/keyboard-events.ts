@@ -8,23 +8,23 @@ import { Page } from '@playwright/test'
 
 interface RecordedEvent {
   event_type: string
-  event: any // KeyboardEvent is too heavy
+  event: object // KeyboardEvent is too heavy
   latency: number
 }
 
-export let dispatch_kb_events = async function (
+export const dispatch_kb_events = async function (
   page: Page,
   selector: string,
   keyboard_events: RecordedEvent[]
 ) {
-  for (let kbev of keyboard_events) {
-    let { event_type, event, latency } = kbev
+  for (const kbev of keyboard_events) {
+    const { event_type, event, latency } = kbev
     await page.waitForTimeout(latency)
     await page.dispatchEvent(selector, event_type, event)
   }
 }
 
-export let macos_pinyin_left_full_square_bracket: RecordedEvent[] = [
+export const macos_pinyin_left_full_square_bracket: RecordedEvent[] = [
   {
     event_type: 'keydown',
     event: {
@@ -72,7 +72,7 @@ export let macos_pinyin_left_full_square_bracket: RecordedEvent[] = [
   },
 ]
 
-export let win10_pinyin_left_full_square_bracket: RecordedEvent[] = [
+export const win10_pinyin_left_full_square_bracket: RecordedEvent[] = [
   {
     event_type: 'keydown',
     event: {
@@ -140,7 +140,7 @@ export let win10_pinyin_left_full_square_bracket: RecordedEvent[] = [
   },
 ]
 
-export let win10_legacy_pinyin_left_full_square_bracket: RecordedEvent[] = [
+export const win10_legacy_pinyin_left_full_square_bracket: RecordedEvent[] = [
   {
     event_type: 'keydown',
     event: {
@@ -193,7 +193,7 @@ export let win10_legacy_pinyin_left_full_square_bracket: RecordedEvent[] = [
   },
 ]
 
-export let macos_pinyin_selecting_candidate_double_left_square_bracket: RecordedEvent[] =
+export const macos_pinyin_selecting_candidate_double_left_square_bracket: RecordedEvent[] =
   [
     {
       event_type: 'keydown',
@@ -362,7 +362,7 @@ export let macos_pinyin_selecting_candidate_double_left_square_bracket: Recorded
     },
   ]
 
-export let win10_RIME_selecting_candidate_double_left_square_bracket: RecordedEvent[] =
+export const win10_RIME_selecting_candidate_double_left_square_bracket: RecordedEvent[] =
   [
     {
       event_type: 'keydown',

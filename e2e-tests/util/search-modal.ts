@@ -1,4 +1,4 @@
-import { Page, Locator, ElementHandle } from '@playwright/test'
+import { Page, ElementHandle } from '@playwright/test'
 import { randomString } from './basic'
 
 export async function closeSearchBox(page: Page): Promise<void> {

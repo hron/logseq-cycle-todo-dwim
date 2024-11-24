@@ -1,7 +1,5 @@
-import path from 'path'
 import { expect } from '@playwright/test'
 import { test } from './fixtures'
-import { callPageAPI } from './utils'
 
 test('verifying the plugin is installed', async ({ page }) => {
   await page.waitForTimeout(1_000)
