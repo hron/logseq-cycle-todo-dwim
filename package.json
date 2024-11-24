@@ -11,7 +11,8 @@
     "e2e:prepare": "./scripts/e2e-prepare",
     "e2e:logseq": "env HOME=`pwd`/tmp/user-home XDG_CONFIG_HOME=`pwd`/tmp/user-home/.config ./tmp/logseq.AppImage",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
@@ -19,9 +20,11 @@
     "@playwright/test": "^1.48.2",
     "@types/node": "^22.9.0",
     "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
     "globals": "^15.12.0",
     "parcel": "2.9.3",
     "playwright": "^1.48.2",
+    "prettier": "3.3.3",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.15.0"
   },

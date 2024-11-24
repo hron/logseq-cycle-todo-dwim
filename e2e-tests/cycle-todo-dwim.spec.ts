@@ -1,7 +1,6 @@
-import path from 'path'
 import { expect } from '@playwright/test'
 import { test } from './fixtures'
-import { callPageAPI, createRandomPage, modKey } from './utils'
+import { createRandomPage, modKey } from './utils'
 
 test('cycling TODO state', async ({ page, block }) => {
   await createRandomPage(page)
@@ -49,7 +48,7 @@ test('cycling TODO state (SCHEDULED)', async ({ page, block }) => {
   await block.mustFill(`LATER foobar\nSCHEDULED: <2000-01-01 Sat .+73y>`)
   await block.escapeEditing()
   await page.keyboard.press('ArrowDown', { delay: 10 })
-  let stateSeq = [
+  const stateSeq = [
     { state: 'now', scheduled: '<2000-01-01 Sat .+73y>' },
     { state: 'later', scheduled: '<2073-01-01 Sun .+73y>' },
     { state: 'now', scheduled: '<2073-01-01 Sun .+73y>' },

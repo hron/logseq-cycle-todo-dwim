@@ -69,7 +69,7 @@ async function computeNextMarker(currentMarker: Marker) {
 }
 
 async function cycleTODOdwim(): Promise<unknown> {
-  let [blocks] = await getChosenBlocks()
+  const [blocks] = await getChosenBlocks()
   if (blocks.length === 0) return
 
   for (const b of blocks) {
