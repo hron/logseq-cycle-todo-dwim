@@ -60,6 +60,53 @@ test('cycling TODO state (SCHEDULED)', async ({ page, block }) => {
     )
     await expect(
       page.locator('.block-content .timestamp >> nth=0')
-    ).toContainText(expected.scheduled)
+    ).toContainText(`SCHEDULED: ${expected.scheduled}`)
+  }
+})
+
+test('cycling TODO state (SCHEDULED) while editing', async ({
+  page,
+  block,
+}) => {
+  await createRandomPage(page)
+
+  await block.activeEditing(0)
+  await block.mustFill(`LATER foobar\nSCHEDULED: <2000-01-01 Sat .+73y>`)
+  await expect(block.isEditing()).toBeTruthy()
+  const stateSeq = [
+    { state: 'NOW', scheduled: '<2000-01-01 Sat .+73y>' },
+    { state: 'LATER', scheduled: '<2073-01-01 Sun .+73y>' },
+    { state: 'NOW', scheduled: '<2073-01-01 Sun .+73y>' },
+  ]
+  for (const expected of stateSeq) {
+    await page.keyboard.press(modKey + '+Shift+Enter', { delay: 10 })
+    await expect(page.locator('textarea >> nth=0')).toHaveText(
+      `${expected.state} foobar\nSCHEDULED: ${expected.scheduled}`
+    )
+  }
+})
+
+test('cycling TODO state (SCHEDULED, but not repeating)', async ({
+  page,
+  block,
+}) => {
+  await createRandomPage(page)
+
+  await block.mustFill(`LATER foobar\nSCHEDULED: <2000-01-01 Sat>`)
+  await block.escapeEditing()
+  await page.keyboard.press('ArrowDown', { delay: 10 })
+  const stateSeq = [
+    { state: 'now', scheduled: '<2000-01-01 Sat>' },
+    { state: 'done', scheduled: '<2000-01-01 Sat>' },
+  ]
+  for (const expected of stateSeq) {
+    await page.keyboard.press(modKey + '+Shift+Enter', { delay: 10 })
+
+    await expect(page.locator('.block-content span >> nth=0')).toHaveClass(
+      `inline ${expected.state}`
+    )
+    await expect(
+      page.locator('.block-content .timestamp >> nth=0')
+    ).toContainText(`SCHEDULED: ${expected.scheduled}`)
   }
 })

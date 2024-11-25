@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
-    "@logseq/libs": "^0.2.0",
     "@playwright/test": "^1.48.2",
+    "@types/luxon": "^3.4.2",
     "@types/node": "^22.9.0",
     "eslint": "^9.15.0",
     "eslint-config-prettier": "^9.1.0",
@@ -33,5 +33,9 @@
     "main": "dist/index.html",
     "icon": "./logo.png",
     "id": "cycle-todo-dwim"
+  },
+  "dependencies": {
+    "@logseq/libs": "^0.2.0",
+    "luxon": "^3.5.0"
   }
 }
