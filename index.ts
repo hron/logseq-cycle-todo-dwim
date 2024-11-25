@@ -72,13 +72,13 @@ async function cycleTODOdwim(): Promise<unknown> {
   const [blocks] = await getChosenBlocks()
   if (blocks.length === 0) return
 
-  for (const b of blocks) {
-    const currentMarker = getMarker(b)
-    const nextMarker = await computeNextMarker(currentMarker)
-    b.content = setMarker(b, nextMarker)
-  }
   return Promise.all(
-    blocks.map((b) => logseq.Editor.updateBlock(b.uuid, b.content || ''))
+    blocks.map(async (b) => {
+      const currentMarker = getMarker(b)
+      const nextMarker = await computeNextMarker(currentMarker)
+      const newContent = setMarker(b, nextMarker)
+      return logseq.Editor.updateBlock(b.uuid, newContent)
+    })
   )
 }
 
