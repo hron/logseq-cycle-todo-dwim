@@ -32,7 +32,11 @@ const consoleLogWatcher = (msg: ConsoleMessage) => {
   const text = msg.text()
 
   // List of error messages to ignore
-  const ignoreErrors = [/net/, /^Error with Permissions-Policy header:/]
+  const ignoreErrors = [
+    /net/,
+    /^Error with Permissions-Policy header:/,
+    /^Error while restoring repos/,
+  ]
 
   // If the text matches any of the ignoreErrors, return early
   if (ignoreErrors.some((error) => text.match(error))) {

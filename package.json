@@ -32,7 +32,7 @@
   },
   "logseq": {
     "main": "dist/index.html",
-    "icon": "./logo.png",
+    "icon": "./logo.webp",
     "id": "cycle-todo-dwim"
   },
   "dependencies": {
