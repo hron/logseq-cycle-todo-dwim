@@ -1,26 +1,42 @@
 {
-  "name": "logseq-sample-plugin",
+  "name": "logseq-cycle-todo-dwim",
   "version": "0.0.1",
-  "description": "A sample plugin for logseq",
+  "description": "logseq plugin for Ctrl+Enter shortcut just like in org-mode",
   "author": "Aleksei Gusev <aleksei.gusev@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "parcel ./index.html",
     "build": "parcel build --public-url . --no-source-maps index.html",
+    "watch": "parcel watch --public-url . --no-source-maps index.html",
     "e2e:prepare": "./scripts/e2e-prepare",
-    "e2e:logseq": "env HOME=`pwd`/tmp/user-home XDG_CONFIG_HOME=`pwd`/tmp/user-home/.config ./tmp/user-home/release/Logseq"
+    "e2e:logseq": "env HOME=`pwd`/tmp/user-home XDG_CONFIG_HOME=`pwd`/tmp/user-home/.config ./tmp/logseq.AppImage",
+    "test": "playwright test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --check",
+    "format:fix": "prettier . --write"
   },
   "devDependencies": {
-    "@logseq/libs": "^0.2.0",
+    "@eslint/js": "^9.15.0",
     "@playwright/test": "^1.48.2",
+    "@types/luxon": "^3.4.2",
     "@types/node": "^22.9.0",
-    "electron": "28.3.1",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.12.0",
     "parcel": "2.9.3",
-    "playwright": "^1.48.2"
+    "playwright": "^1.48.2",
+    "prettier": "3.3.3",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.15.0"
   },
   "logseq": {
     "main": "dist/index.html",
-    "icon": "./logo.png",
-    "id": "sample-plugin"
+    "icon": "./logo.webp",
+    "id": "cycle-todo-dwim"
+  },
+  "dependencies": {
+    "@logseq/libs": "^0.2.0",
+    "luxon": "^3.5.0"
   }
 }

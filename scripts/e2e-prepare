@@ -3,16 +3,12 @@
 VERSION=${1:-0.10.9}
 ROOT_DIR=$(realpath "$(dirname "$(realpath "${BASH_SOURCE[0]}")")/..")
 TMP_DIR="$ROOT_DIR/tmp"
-INSTALL_DIR="$TMP_DIR/user-home/release"
 
 rm -rf "$TMP_DIR"
 
-mkdir -p "$INSTALL_DIR"
-wget "https://github.com/logseq/logseq/releases/download/${VERSION}/Logseq-linux-x64-${VERSION}.zip" -O"$TMP_DIR/logseq.zip"
-rm -rf "$INSTALL_DIR"
-unzip "$TMP_DIR/logseq.zip" -d "$INSTALL_DIR"
-mv "${INSTALL_DIR}"/Logseq-linux-x64/* "${INSTALL_DIR}"
-rmdir "${INSTALL_DIR}/Logseq-linux-x64"
+mkdir -p "$TMP_DIR"
+wget "https://github.com/logseq/logseq/releases/download/${VERSION}/Logseq-linux-x64-${VERSION}.AppImage" -O"$TMP_DIR/logseq.AppImage"
+chmod +x "$TMP_DIR/logseq.AppImage"
 
 mkdir -p "$TMP_DIR/user-home/.logseq"
 cat <<JSON > "$TMP_DIR/user-home/.logseq/preferences.json"

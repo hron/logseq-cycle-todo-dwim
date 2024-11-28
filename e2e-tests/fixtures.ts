@@ -15,15 +15,15 @@ let context: BrowserContext
 let page: Page
 
 // For testing special characters in graph name / path
-let repoName = '@' + randomString(10)
-let testTmpDir = path.resolve(__dirname, '../tmp')
-let testGraphDir = path.resolve(testTmpDir, './logseqGraph')
+const repoName = '@' + randomString(10)
+const testTmpDir = path.resolve(__dirname, '../tmp')
+const testGraphDir = path.resolve(testTmpDir, './logseqGraph')
 
 if (fs.existsSync(testGraphDir)) {
   fs.rmSync(testGraphDir, { recursive: true })
 }
 
-export let graphDir = path.resolve(testGraphDir, '#e2e-test', repoName)
+export const graphDir = path.resolve(testGraphDir, '#e2e-test', repoName)
 
 // NOTE: This following is a console log watcher for error logs.
 // Save and print all logs when error happens.
@@ -32,7 +32,11 @@ const consoleLogWatcher = (msg: ConsoleMessage) => {
   const text = msg.text()
 
   // List of error messages to ignore
-  const ignoreErrors = [/net/, /^Error with Permissions-Policy header:/]
+  const ignoreErrors = [
+    /net/,
+    /^Error with Permissions-Policy header:/,
+    /^Error while restoring repos/,
+  ]
 
   // If the text matches any of the ignoreErrors, return early
   if (ignoreErrors.some((error) => text.match(error))) {
@@ -56,8 +60,8 @@ base.beforeAll(async () => {
   })
 
   electronApp = await electron.launch({
-    cwd: path.resolve(testTmpDir, 'user-home/release/resources/app'),
-    args: ['electron.js'],
+    executablePath: path.resolve(testTmpDir, 'logseq.AppImage'),
+    args: ['--no-sandbox'],
     env: {
       ...process.env,
       HOME: `${testTmpDir}/user-home`,
@@ -145,6 +149,7 @@ base.beforeEach(async () => {
 // hijack electron app into the test context
 // FIXME: add type to `block`
 export const test = base.extend<LogseqFixtures>({
+  // eslint-disable-next-line no-empty-pattern
   page: async ({}, use) => {
     await use(page)
   },
@@ -172,7 +177,7 @@ export const test = base.extend<LogseqFixtures>({
         await expect(locator).toHaveText(toBe, { timeout: 1000 })
       },
       enterNext: async (): Promise<Locator> => {
-        let blockCount = await page
+        const blockCount = await page
           .locator('.page-blocks-inner .ls-block')
           .count()
         await page.press('textarea >> nth=0', 'Enter')
@@ -186,7 +191,7 @@ export const test = base.extend<LogseqFixtures>({
         await page.$eval('.add-button-link-wrap', (element) => {
           element.scrollIntoView()
         })
-        let blockCount = await page
+        const blockCount = await page
           .locator('.page-blocks-inner .ls-block')
           .count()
         // the next element after all blocks.
@@ -201,13 +206,13 @@ export const test = base.extend<LogseqFixtures>({
         const locator = page.locator('textarea >> nth=0')
         const before = await locator.boundingBox()
         await locator.press('Tab', { delay: 100 })
-        return (await locator.boundingBox()).x > before.x
+        return (await locator.boundingBox())!.x > before!.x
       },
       unindent: async (): Promise<boolean> => {
         const locator = page.locator('textarea >> nth=0')
         const before = await locator.boundingBox()
         await locator.press('Shift+Tab', { delay: 100 })
-        return (await locator.boundingBox()).x < before.x
+        return (await locator.boundingBox())!.x < before!.x
       },
       waitForBlocks: async (total: number): Promise<void> => {
         // NOTE: `nth=` counts from 0.
@@ -284,6 +289,7 @@ export const test = base.extend<LogseqFixtures>({
     use(block)
   },
 
+  // eslint-disable-next-line no-empty-pattern
   autocompleteMenu: async ({}, use) => {
     const autocompleteMenu: autocompleteMenu = {
       expectVisible: async (modalName?: string) => {
@@ -312,18 +318,21 @@ export const test = base.extend<LogseqFixtures>({
     await use(autocompleteMenu)
   },
 
+  // eslint-disable-next-line no-empty-pattern
   context: async ({}, use) => {
     await use(context)
   },
+  // eslint-disable-next-line no-empty-pattern
   app: async ({}, use) => {
     await use(electronApp)
   },
+  // eslint-disable-next-line no-empty-pattern
   graphDir: async ({}, use) => {
     await use(graphDir)
   },
 })
 
-let getTracingFilePath = function (): string {
+const getTracingFilePath = function (): string {
   return `e2e-dump/trace-${Date.now()}.zip.dump`
 }
 
@@ -334,7 +343,7 @@ test.afterAll(async () => {
 /**
  * Trace all tests in a file
  */
-export let traceAll = function () {
+export const traceAll = function () {
   test.beforeAll(async () => {
     await context.tracing.startChunk()
   })
