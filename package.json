@@ -1,7 +1,7 @@
 {
   "name": "logseq-cycle-todo-dwim",
   "version": "0.0.1",
-  "description": "logseq plugin for Ctrl+Enter shortcut just like in org-mode",
+  "description": "Ctrl+Enter with repeating timestamp support, similar to org-mode",
   "author": "Aleksei Gusev <aleksei.gusev@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -17,6 +17,9 @@
     "format:fix": "prettier . --write"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@eslint/js": "^9.15.0",
     "@playwright/test": "^1.48.2",
     "@types/luxon": "^3.4.2",
@@ -27,6 +30,7 @@
     "parcel": "2.9.3",
     "playwright": "^1.48.2",
     "prettier": "3.3.3",
+    "semantic-release": "^22.0.0",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.15.0"
   },

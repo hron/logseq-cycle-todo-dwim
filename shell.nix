@@ -6,6 +6,5 @@ with pkgs; mkShell {
   buildInputs = [
     nodejs_18
     yarn
-    bashInteractive
   ];
 }
