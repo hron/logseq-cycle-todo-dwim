@@ -66,7 +66,16 @@ function setMarker(block: BlockEntity, newMarker: Marker) {
 async function computeNextMarker(currentMarker: Marker) {
   const userPreferredStyle = await preferredTodoStyle()
   const todoSeq = todoSequences[userPreferredStyle] as readonly Marker[]
-  return todoSeq[(todoSeq.indexOf(currentMarker) + 1) % todoSeq.length]
+  const nextMarker =
+    todoSeq[(todoSeq.indexOf(currentMarker) + 1) % todoSeq.length]
+  if (
+    ['NOW', 'DOING'].includes(nextMarker) &&
+    logseq.settings!['cycleTODOdwimSkipDoing']
+  ) {
+    return computeNextMarker(nextMarker)
+  } else {
+    return nextMarker
+  }
 }
 
 type Timestamp = {
@@ -153,6 +162,17 @@ async function cycleTODOdwim(): Promise<void[]> {
 }
 
 async function main() {
+  logseq.useSettingsSchema([
+    {
+      key: 'cycleTODOdwimSkipDoing',
+      type: 'boolean',
+      title: 'Skip NOW/DOING State',
+      description:
+        '<p>Determines whether the Cycle TODO (Do What I Mean) feature skips the NOW/DOING state</p>',
+      default: false,
+    },
+  ])
+
   logseq.App.registerCommandPalette(
     {
       label: 'Cycle TODO (Do What I Mean)',

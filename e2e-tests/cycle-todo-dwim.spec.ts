@@ -1,8 +1,9 @@
-import { expect } from '@playwright/test'
+import { expect, Page } from '@playwright/test'
 import { test } from './fixtures'
 import { createRandomPage, modKey } from './utils'
 
 test('cycling TODO state', async ({ page, block }) => {
+  await setSkipDoingSettingTo(page, false)
   await createRandomPage(page)
 
   await block.mustFill('foo')
@@ -28,6 +29,7 @@ test('cycling TODO state', async ({ page, block }) => {
 })
 
 test('cycling TODO state while editing', async ({ page, block }) => {
+  await setSkipDoingSettingTo(page, false)
   await createRandomPage(page)
 
   await block.activeEditing(0)
@@ -43,6 +45,7 @@ test('cycling TODO state while editing', async ({ page, block }) => {
 })
 
 test('cycling TODO state (SCHEDULED)', async ({ page, block }) => {
+  await setSkipDoingSettingTo(page, false)
   await createRandomPage(page)
 
   await block.mustFill(`LATER foobar\nSCHEDULED: <2000-01-01 Sat .+73y>`)
@@ -68,6 +71,7 @@ test('cycling TODO state (SCHEDULED) while editing', async ({
   page,
   block,
 }) => {
+  await setSkipDoingSettingTo(page, false)
   await createRandomPage(page)
 
   await block.activeEditing(0)
@@ -90,6 +94,7 @@ test('cycling TODO state (SCHEDULED, but not repeating)', async ({
   page,
   block,
 }) => {
+  await setSkipDoingSettingTo(page, false)
   await createRandomPage(page)
 
   await block.mustFill(`LATER foobar\nSCHEDULED: <2000-01-01 Sat>`)
@@ -110,3 +115,34 @@ test('cycling TODO state (SCHEDULED, but not repeating)', async ({
     ).toContainText(`SCHEDULED: ${expected.scheduled}`)
   }
 })
+
+test('skipping NOW/DOING when this option is enabled', async ({
+  page,
+  block,
+}) => {
+  await setSkipDoingSettingTo(page, true)
+  await createRandomPage(page)
+
+  await block.mustFill(`LATER foobar`)
+  await block.escapeEditing()
+  await page.keyboard.press('ArrowDown', { delay: 10 })
+  await page.keyboard.press(modKey + '+Shift+Enter', { delay: 10 })
+  await expect(page.locator('.block-content span >> nth=0')).toHaveClass(
+    `inline done`
+  )
+})
+
+async function setSkipDoingSettingTo(page: Page, enabled: boolean) {
+  await page.click('#head .toolbar-dots-btn')
+  await page.click('#head .dropdown-wrapper >> text=Settings')
+  await page.click('.settings-modal [data-id=plugins] a')
+
+  const setting = page.locator(
+    '[data-key=cycleTODOdwimSkipDoing] >> input[type=checkbox]'
+  )
+
+  await setting.setChecked(enabled)
+  await page.waitForTimeout(1000)
+  await page.keyboard.press('Escape')
+  await page.keyboard.press('Escape')
+}
