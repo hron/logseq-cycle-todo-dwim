@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/hron/logseq-cycle-todo-dwim/compare/v1.0.0...v1.1.0) (2024-12-03)
+
+
+### Features
+
+* Add "Skip DOING/NOW?" setting ([486812b](https://github.com/hron/logseq-cycle-todo-dwim/commit/486812b7441c991d974e4f92fe23be05076907bb))
+
 # 1.0.0 (2024-12-03)
 
 

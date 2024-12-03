@@ -1,6 +1,6 @@
 {
   "name": "logseq-cycle-todo-dwim",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Ctrl+Enter with repeating timestamp support, similar to org-mode",
   "author": "Aleksei Gusev <aleksei.gusev@gmail.com>",
   "license": "MIT",
