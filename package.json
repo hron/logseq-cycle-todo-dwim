@@ -39,7 +39,8 @@
   "logseq": {
     "main": "dist/index.html",
     "icon": "./logo.webp",
-    "id": "cycle-todo-dwim"
+    "id": "cycle-todo-dwim",
+    "title": "Cycle TODO (Do What I Mean)"
   },
   "dependencies": {
     "@logseq/libs": "^0.2.0",
